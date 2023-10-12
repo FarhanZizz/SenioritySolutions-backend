@@ -1,0 +1,61 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  phone     Int
+  email     String    @unique
+  password  String
+  role      Role      @default(USER)
+  reviews   Review[]
+}
+
+enum Role {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
+model Service {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  reviews     Review[]
+}
+
+model Booking {
+  id          Int           @id @default(autoincrement())
+  userId      Int
+  serviceId   Int
+  scheduledAt DateTime
+  status      BookingStatus @default(PENDING)
+  caregiver   String?
+  notes       String?
+}
+
+enum BookingStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  serviceId Int
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  service   Service  @relation(fields: [serviceId], references: [id])
+}
