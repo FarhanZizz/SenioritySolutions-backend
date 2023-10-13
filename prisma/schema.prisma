@@ -10,23 +10,17 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
+  id        String       @id @default(uuid())
   name      String
   phone     Int
-  email     String    @unique
+  email     String      @unique
   password  String
-  role      Role      @default(USER)
+  role      String      @default("user")
   reviews   Review[]
 }
 
-enum Role {
-  USER
-  ADMIN
-  SUPER_ADMIN
-}
-
 model Service {
-  id          Int       @id @default(autoincrement())
+  id          String       @id @default(uuid())
   name        String
   description String
   price       Float
@@ -34,26 +28,22 @@ model Service {
 }
 
 model Booking {
-  id          Int           @id @default(autoincrement())
-  userId      Int
-  serviceId   Int
+  id          String     @id @default(uuid())
+  userId      String
+  serviceId   String
   scheduledAt DateTime
-  status      BookingStatus @default(PENDING)
-  caregiver   String?
+  status      String     @default("pending")
+  caregiver   String
   notes       String?
 }
 
-enum BookingStatus {
-  PENDING
-  APPROVED
-  REJECTED
-}
+
 
 model Review {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  serviceId Int
-  rating    Int
+  id        String       @id @default(uuid())
+  userId    String
+  serviceId String
+  rating    String
   comment   String
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
