@@ -1,6 +1,13 @@
 import { prisma } from "../../app";
-import { IService } from "./service.interface";
+import { IReview, IService } from "./service.interface";
 
+const createReview = async (review: IReview): Promise<IReview | null> => {
+  const createdReview = await prisma.review.create({
+    data: review,
+  });
+
+  return createdReview;
+};
 const createService = async (service: IService): Promise<IService | null> => {
   const createdService = await prisma.service.create({
     data: service,
@@ -57,4 +64,5 @@ export const serviceService = {
   updateService,
   deleteService,
   getAllService,
+  createReview,
 };

@@ -6,10 +6,10 @@ export interface IService {
 }
 
 export interface IReview {
-  id: string;
+  id?: string;
   userId: string;
   serviceId: string;
-  rating: string;
+  rating: number;
   comment: string;
-  createdAt: Date;
+  createdAt?: Date;
 }

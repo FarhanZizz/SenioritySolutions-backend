@@ -2,6 +2,35 @@ import httpStatus from "http-status";
 import { serviceService } from "./service.service";
 import { NextFunction, Request, Response } from "express";
 
+const createReview = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId: string = req?.user?.id;
+    const serviceId = req.params.id;
+    const comment: string = req.body.comment;
+    const rating: number = req.body.rating;
+    const review = {
+      rating,
+      comment,
+      userId,
+      serviceId,
+    };
+
+    const result = await serviceService.createReview(review);
+
+    return res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Review Posted successfully!",
+      data: result,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
 const createService = async (
   req: Request,
   res: Response,
@@ -88,4 +117,5 @@ export const serviceController = {
   updateService,
   deleteService,
   getAllService,
+  createReview,
 };
