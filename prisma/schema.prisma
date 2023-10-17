@@ -17,26 +17,34 @@ model User {
   password  String
   role      String      @default("user")
   reviews   Review[]
+  bookings  Booking[]
 }
 
 model Service {
   id          String       @id @default(uuid())
+  imageURL    String    @default("#")
   name        String
   description String
   price       Float
+  available   Boolean     @default(true)
+  category String @default("COMPANIONSHIP")
+  location    String @default("CHITTAGONG")
   reviews     Review[] 
+  bookings    Booking[]
 }
 
 model Booking {
-  id          String     @id @default(uuid())
+  id          String       @id @default(uuid())
   userId      String
   serviceId   String
-  scheduledAt DateTime
+  bookingDate String
+  bookingTime String
+  duration    Int
   status      String     @default("pending")
-  caregiver   String
   notes       String?
+  service     Service     @relation(fields: [serviceId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
-
 
 
 model Review {
@@ -48,4 +56,19 @@ model Review {
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
   service   Service  @relation(fields: [serviceId], references: [id])
+}
+
+model BlogPost {
+  id        String    @id @default(uuid())
+  title     String
+  content   String
+  author    String
+  createdAt DateTime  @default(now())
+}
+
+model FAQ {
+  id        String    @id @default(uuid())
+  question  String
+  answer    String
+  createdAt DateTime  @default(now())
 }

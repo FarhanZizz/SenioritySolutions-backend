@@ -1,0 +1,5 @@
+-- CreateEnum
+CREATE TYPE "ServiceCategory" AS ENUM ('COMPANIONSHIP', 'PERSONAL_CARE', 'MEAL_PREPARATION', 'HOUSEHOLD_CHORES');
+
+-- AlterTable
+ALTER TABLE "Service" ADD COLUMN     "category" "ServiceCategory" NOT NULL DEFAULT 'COMPANIONSHIP';
