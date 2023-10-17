@@ -1,6 +1,8 @@
 import httpStatus from "http-status";
 import { serviceService } from "./service.service";
 import { NextFunction, Request, Response } from "express";
+import { paginationFields, serviceFilterableFields } from "./service.interface";
+import pick from "../../helpers/pick";
 
 const createReview = async (
   req: Request,
@@ -73,6 +75,26 @@ const updateService = async (
   }
 };
 
+const singleService = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.params.id;
+    const result = await serviceService.singleService(id);
+
+    return res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Service Retrived successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const deleteService = async (
   req: Request,
   res: Response,
@@ -99,13 +121,25 @@ const getAllService = async (
   next: NextFunction
 ) => {
   try {
-    const result = await serviceService.getAllService();
+    const filters = pick(req.query, serviceFilterableFields);
+    const paginationOptions = pick(req.query, paginationFields);
+    const result = await serviceService.getAllService(
+      filters,
+      paginationOptions
+    );
 
     return res.status(httpStatus.OK).json({
       success: true,
       statusCode: httpStatus.OK,
       message: "Services retrived successfully",
-      data: result,
+      meta: {
+        // Metadata
+        page: result.meta.page,
+        size: result.meta.size,
+        total: result.meta.total,
+        totalPage: result.meta.totalPage,
+      },
+      data: result.data, // Data
     });
   } catch (error) {
     next(error);
@@ -118,4 +152,5 @@ export const serviceController = {
   deleteService,
   getAllService,
   createReview,
+  singleService,
 };
