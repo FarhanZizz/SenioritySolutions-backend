@@ -7,11 +7,7 @@ import { ServiceValidation } from "./service.validation";
 
 const router = express.Router();
 
-router.get(
-  "/service",
-  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.USER),
-  serviceController.getAllService
-);
+router.get("/service", serviceController.getAllService);
 router.get(
   "/service/:id",
   auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.USER),

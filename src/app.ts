@@ -7,6 +7,8 @@ import { PrismaClient } from "@prisma/client";
 import cookieParser from "cookie-parser";
 import { UserRoutes } from "./modules/user/user.routes";
 import { serviceRoutes } from "./modules/service/service.routes";
+import { bookingRoutes } from "./modules/booking/booking.routes";
+import { ContentRoutes } from "./modules/content/content.routes";
 
 const app: Application = express();
 export const prisma = new PrismaClient();
@@ -20,6 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1", UserRoutes);
 app.use("/api/v1", serviceRoutes);
+app.use("/api/v1", bookingRoutes);
+app.use("/api/v1", ContentRoutes);
 
 //global error handler
 app.use(globalErrorHandler);
