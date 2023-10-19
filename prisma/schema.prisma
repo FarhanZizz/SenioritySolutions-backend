@@ -16,13 +16,11 @@ model User {
   email     String      @unique
   password  String
   role      String      @default("user")
-  reviews   Review[]
   bookings  Booking[]
 }
 
 model Service {
   id          String       @id @default(uuid())
-  imageURL    String    @default("#")
   name        String
   description String
   price       Float
@@ -49,12 +47,10 @@ model Booking {
 
 model Review {
   id        String       @id @default(uuid())
-  userId    String
   serviceId String
   rating    Int
   comment   String
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
   service   Service  @relation(fields: [serviceId], references: [id])
 }
 

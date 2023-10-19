@@ -4,9 +4,6 @@ const createServiceZodSchema = z.object({
   name: z.string().min(2, {
     message: "Name should be at least 2 characters long",
   }),
-  imageURL: z.string().url({
-    message: "Invalid image URL",
-  }),
   description: z.string().min(10, {
     message: "Description should be at least 10 characters long",
   }),

@@ -21,7 +21,6 @@ export interface IService extends PrismaService {}
 
 export interface IReview {
   id?: string;
-  userId: string;
   serviceId: string;
   rating: number;
   comment: string;

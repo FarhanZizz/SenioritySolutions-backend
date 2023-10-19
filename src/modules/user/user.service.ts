@@ -80,6 +80,7 @@ const deleteUser = async (id: string): Promise<IUser | null> => {
 
   return deletedUser;
 };
+
 export const UserService = {
   createUser,
   loginUser,

@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, Review } from "@prisma/client";
 import { prisma } from "../../app";
 import {
   IReview,

@@ -10,14 +10,12 @@ const createReview = async (
   next: NextFunction
 ) => {
   try {
-    const userId: string = req?.user?.id;
     const serviceId = req.params.id;
     const comment: string = req.body.comment;
     const rating: number = req.body.rating;
     const review = {
       rating,
       comment,
-      userId,
       serviceId,
     };
 
