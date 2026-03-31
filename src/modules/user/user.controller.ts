@@ -4,127 +4,59 @@ import { UserService } from "./user.service";
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = req.body;
-
-    const result = await UserService.createUser(user);
-
-    return res.status(httpStatus.OK).json({
-      success: true,
-      statusCode: httpStatus.OK,
-      message: "User created successfully!",
-      data: result,
-    });
-  } catch (error) {
-    return next(error);
-  }
+    const result = await UserService.createUser(req.body);
+    return res.status(httpStatus.OK).json({ success: true, statusCode: httpStatus.OK, message: "User created successfully!", data: result });
+  } catch (error) { return next(error); }
 };
 
 const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { ...loginData } = req.body;
-    const result = await UserService.loginUser(loginData);
-
-    return res.status(httpStatus.OK).json({
-      success: true,
-      statusCode: httpStatus.OK,
-      message: "User Logged In successfully!",
-      token: result,
-    });
-  } catch (error) {
-    return next(error);
-  }
+    const result = await UserService.loginUser(req.body);
+    return res.status(httpStatus.OK).json({ success: true, statusCode: httpStatus.OK, message: "User Logged In successfully!", token: result });
+  } catch (error) { return next(error); }
 };
 
 const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await UserService.getAllUsers();
-
-    return res.status(httpStatus.OK).json({
-      success: true,
-      statusCode: httpStatus.OK,
-      message: "Users retrieved successfully",
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
+    return res.status(httpStatus.OK).json({ success: true, statusCode: httpStatus.OK, message: "Users retrieved successfully", data: result });
+  } catch (error) { next(error); }
 };
 
-const getSingleUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const getSingleUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = req.params.id;
-    const result = await UserService.getSingleUser(id);
-
-    return res.status(httpStatus.OK).json({
-      success: true,
-      statusCode: httpStatus.OK,
-      message: "User retrieved successfully",
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
+    const result = await UserService.getSingleUser(req.params.id);
+    return res.status(httpStatus.OK).json({ success: true, statusCode: httpStatus.OK, message: "User retrieved successfully", data: result });
+  } catch (error) { next(error); }
 };
 
 const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = req.params.id;
-    const updatedData = req.body;
-    const result = await UserService.updateUser(id, updatedData);
-
-    return res.status(httpStatus.OK).json({
-      success: true,
-      statusCode: httpStatus.OK,
-      message: "User updated successfully",
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
+    const result = await UserService.updateUser(req.params.id, req.body);
+    return res.status(httpStatus.OK).json({ success: true, statusCode: httpStatus.OK, message: "User updated successfully", data: result });
+  } catch (error) { next(error); }
 };
 
 const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = req.params.id;
-    const result = await UserService.deleteUser(id);
-
-    return res.status(httpStatus.OK).json({
-      success: true,
-      statusCode: httpStatus.OK,
-      message: "User deleted successfully",
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
+    const result = await UserService.deleteUser(req.params.id);
+    return res.status(httpStatus.OK).json({ success: true, statusCode: httpStatus.OK, message: "User deleted successfully", data: result });
+  } catch (error) { next(error); }
 };
 
 const getProfile = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = req?.user?.id;
-    const result = await UserService.getSingleUser(id);
-
-    return res.status(httpStatus.OK).json({
-      success: true,
-      statusCode: httpStatus.OK,
-      message: "Profile retrieved successfully",
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
+    const result = await UserService.getSingleUser(req?.user?.id);
+    return res.status(httpStatus.OK).json({ success: true, statusCode: httpStatus.OK, message: "Profile retrieved successfully", data: result });
+  } catch (error) { next(error); }
 };
 
-export const UserController = {
-  createUser,
-  loginUser,
-  getAllUsers,
-  getSingleUser,
-  updateUser,
-  deleteUser,
-  getProfile,
+const changeRole = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { role } = req.body;
+    const result = await UserService.changeRole(req.params.id, role);
+    return res.status(httpStatus.OK).json({ success: true, statusCode: httpStatus.OK, message: "Role updated successfully", data: result });
+  } catch (error) { next(error); }
 };
+
+export const UserController = { createUser, loginUser, getAllUsers, getSingleUser, updateUser, deleteUser, getProfile, changeRole };

@@ -1,15 +1,15 @@
 export type IUser = {
-  id: string;
+  id?: string;
   name: string;
   email: string;
   password: string;
-  role: string;
-  phone: number;
+  phone: string;
+  role?: string;
+  address?: string;
+  profileImage?: string;
 };
+
 export type ILoginUser = {
   email: string;
   password: string;
-};
-export type ILoginUserResponse = {
-  accessToken: string;
 };
