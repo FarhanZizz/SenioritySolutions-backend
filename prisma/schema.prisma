@@ -10,48 +10,55 @@ datasource db {
 }
 
 model User {
-  id        String       @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
-  phone     Int
-  email     String      @unique
+  phone     String
+  email     String    @unique
   password  String
-  role      String      @default("user")
+  role      String    @default("user")
+  address   String?
+  profileImage String?
   bookings  Booking[]
+  feedbacks Feedback[]
 }
 
 model Service {
-  id          String       @id @default(uuid())
+  id          String    @id @default(uuid())
   name        String
   description String
   price       Float
-  available   Boolean     @default(true)
-  category String @default("COMPANIONSHIP")
-  location    String @default("CHITTAGONG")
-  reviews     Review[] 
+  available   Boolean   @default(true)
+  category    String    @default("COMPANIONSHIP")
+  location    String    @default("CHITTAGONG")
+  imageUrl    String?
+  createdAt   DateTime  @default(now())
+  reviews     Review[]
   bookings    Booking[]
 }
 
 model Booking {
-  id          String       @id @default(uuid())
+  id          String    @id @default(uuid())
   userId      String
   serviceId   String
   bookingDate String
   bookingTime String
   duration    Int
-  status      String     @default("pending")
+  status      String    @default("pending")
   notes       String?
-  service     Service     @relation(fields: [serviceId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+  service     Service   @relation(fields: [serviceId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
 }
 
-
 model Review {
-  id        String       @id @default(uuid())
+  id        String    @id @default(uuid())
   serviceId String
+  userId    String?
+  userName  String?
   rating    Int
   comment   String
-  createdAt DateTime @default(now())
-  service   Service  @relation(fields: [serviceId], references: [id])
+  createdAt DateTime  @default(now())
+  service   Service   @relation(fields: [serviceId], references: [id])
 }
 
 model BlogPost {
@@ -59,6 +66,7 @@ model BlogPost {
   title     String
   content   String
   author    String
+  imageUrl  String?
   createdAt DateTime  @default(now())
 }
 
@@ -67,4 +75,15 @@ model FAQ {
   question  String
   answer    String
   createdAt DateTime  @default(now())
+}
+
+model Feedback {
+  id        String    @id @default(uuid())
+  userId    String?
+  name      String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime  @default(now())
+  user      User?     @relation(fields: [userId], references: [id])
 }
