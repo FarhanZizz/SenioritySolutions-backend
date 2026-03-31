@@ -1,43 +1,22 @@
-import { Service as PrismaService } from "@prisma/client";
+export type IService = {
+  id?: string;
+  name: string;
+  description: string;
+  price: number;
+  available?: boolean;
+  category?: string;
+  location?: string;
+  imageUrl?: string;
+};
 
-export interface IService extends PrismaService {}
-
-// enum ServiceCategory {
-//   COMPANIONSHIP,
-//   PERSONAL_CARE,
-//   MEAL_PREPARATION,
-//   HOUSEHOLD_CHORES,
-// }
-
-// enum Division {
-//   CHITTAGONG,
-//   DHAKA,
-//   SYLHET,
-//   RAJSHAHI,
-//   RANGPUR,
-//   BARISAL,
-//   KHULNA,
-// }
-
-export interface IReview {
+export type IReview = {
   id?: string;
   serviceId: string;
+  userId?: string;
+  userName?: string;
   rating: number;
   comment: string;
-  createdAt?: Date;
-}
-
-export const serviceSearchableFields = ["name", "location", "category"];
-
-export const serviceFilterableFields = [
-  "search",
-  "minPrice",
-  "maxPrice",
-  "category",
-  "location",
-];
-
-export const paginationFields = ["page", "size", "sortBy", "sortOrder"];
+};
 
 export type IServiceFilters = {
   search?: string;
@@ -45,21 +24,15 @@ export type IServiceFilters = {
   maxPrice?: string;
   category?: string;
   location?: string;
+  available?: string;
 };
 
 export type IServicePaginationOptions = {
   page?: number;
   size?: number;
   sortBy?: string;
-  sortOrder?: "asc" | "desc";
+  sortOrder?: string;
 };
 
-export type IGenericResponse<T> = {
-  meta: {
-    page: number;
-    size: number;
-    total: number;
-    totalPage: number;
-  };
-  data: T;
-};
+export const serviceFilterableFields = ["search", "minPrice", "maxPrice", "category", "location", "available"];
+export const paginationFields = ["page", "size", "sortBy", "sortOrder"];
