@@ -23,7 +23,7 @@ REST API for the SenioritySolutions senior care service booking platform. Built 
 ### 1. Clone and install
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/FarhanZizz/SenioritySolutions-backend.git
 cd SenioritySolutions-backend
 npm install
 ```
